@@ -1,10 +1,17 @@
-import { Suspense, useState, useDeferredValue } from "react";
+import {
+  Suspense,
+  useState,
+  useDeferredValue,
+  startTransition,
+  useTransition,
+} from "react";
 import Post from "../components/Post";
 import Counter from "../components/Counter";
 
 const SuspensePage = () => {
-  const [isShow, setIsShow] = useState(true);
+  const [isShow, setIsShow] = useState(false);
   const [count, setCount] = useState(0);
+  const deferredVersion = useDeferredValue(count);
 
   const [postId, setPostId] = useState(1);
   const deferredPostId = useDeferredValue(postId);
@@ -21,24 +28,40 @@ const SuspensePage = () => {
   //   [deferredPostId],
   // );
 
-  const isStale = deferredPostId !== postId;
+  const isStale = deferredPostId !== postId || deferredVersion !== count;
+
+  const [isPending, startTransition] = useTransition();
+
+  const handleShowOtherData = () => {
+    startTransition(() => {
+      setIsShow(!isShow);
+    });
+  };
 
   return (
     <div>
       <h1>SuspensePage</h1>
-      <Counter count={count} setCount={setCount} />
-      <button onClick={() => setIsShow(!isShow)}>Start show mock data</button>
+      <Counter count={count} setCount={setCount} title="Version" />
+      <button style={{ display: "block" }} onClick={handleShowOtherData}>
+        {isShow ? "Hide slow data" : "Show slow data"}
+      </button>
 
       <input
         type="number"
         value={postId}
         onChange={(e) => setPostId(Number(e.target.value))}
       />
-      <Suspense fallback={<div>Loading...</div>}>
-        {isShow && <Post isStale={isStale} postId={deferredPostId} />}
-        <Suspense fallback={<div>LoadingSlow...</div>}>
-          {isShow && <Post postId={2} />}
-        </Suspense>
+      <Suspense fallback={<div>Suspense Loading...</div>}>
+        <Post
+          isStale={isStale}
+          postId={deferredPostId}
+          version={deferredVersion}
+        />
+
+        {/* <Suspense fallback={<div>Suspense LoadingSlow...</div>}> */}
+        {isPending && <div>Transition Loading...</div>}
+        {isShow && <Post postId={100} delay={3000} />}
+        {/* </Suspense> */}
       </Suspense>
     </div>
   );

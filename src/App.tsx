@@ -55,7 +55,7 @@ function App() {
         <Link to="/suspense">Suspense</Link>
       </div>
 
-      <button onClick={() => setTab("about")}>About</button>
+      {/* <button onClick={() => setTab("about")}>About</button>
       <button onClick={() => setTab("posts")}>Posts</button>
       <ErrorBoundary
         onError={handleError}
@@ -67,7 +67,7 @@ function App() {
           {tab === "about" && <About isUseContext={false} />}
           {tab === "posts" && <Posts postsPromise={postsPromise} />}
         </Suspense>
-      </ErrorBoundary>
+      </ErrorBoundary> */}
     </TestProvider>
   );
 }
