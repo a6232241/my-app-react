@@ -1,2 +1,2 @@
 export { useTestContext, TestContext } from "./TestContext";
-export {default as TestProvider} from "./TestProvider";
+export { default as TestProvider } from "./TestProvider";
