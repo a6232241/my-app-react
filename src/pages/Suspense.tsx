@@ -7,14 +7,18 @@ import {
 } from "react";
 import Post from "../components/Post";
 import Counter from "../components/Counter";
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SuspensePage = () => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
   const [count, setCount] = useState(0);
   const deferredVersion = useDeferredValue(count);
 
-  const [postId, setPostId] = useState(1);
-  const deferredPostId = useDeferredValue(postId);
+  const [searchParams] = useSearchParams();
+  const queryPostId = Number(searchParams.get('id') ?? 1);
+
+  const [postId, setPostId] = useState(queryPostId);
+  // const deferredPostId = useDeferredValue(postId);
 
   // 當 deferredPostId 改變時，觸發 useMemo，並呼叫 promise
   // 1. 因子組件 use(promise) 尚未 resolve，React 中斷當前渲染。
@@ -28,21 +32,30 @@ const SuspensePage = () => {
   //   [deferredPostId],
   // );
 
-  const isStale = deferredPostId !== postId || deferredVersion !== count;
+  // const isStale = deferredPostId !== postId || deferredVersion !== count;
 
-  const [isPending, startTransition] = useTransition();
+  // const [isPending, startTransition] = useTransition();
 
-  const handleShowOtherData = () => {
+  const handleShowSlowData = () => {
     startTransition(() => {
       setIsShow(!isShow);
     });
   };
 
+  const navigate = useNavigate();
+
+  const handleNavigateTo = () => {
+    navigate(`/suspense?id=${postId}`)
+    // startTransition(() => {
+    //   navigate(`/suspense?id=${postId}`)
+    // })
+  }
+
   return (
     <div>
       <h1>SuspensePage</h1>
       <Counter count={count} setCount={setCount} title="Version" />
-      <button style={{ display: "block" }} onClick={handleShowOtherData}>
+      <button style={{ display: "block" }} onClick={handleShowSlowData}>
         {isShow ? "Hide slow data" : "Show slow data"}
       </button>
 
@@ -51,18 +64,30 @@ const SuspensePage = () => {
         value={postId}
         onChange={(e) => setPostId(Number(e.target.value))}
       />
-      <Suspense fallback={<div>Suspense Loading...</div>}>
-        <Post
-          isStale={isStale}
-          postId={deferredPostId}
-          version={deferredVersion}
-        />
 
-        {/* <Suspense fallback={<div>Suspense LoadingSlow...</div>}> */}
-        {isPending && <div>Transition Loading...</div>}
-        {isShow && <Post postId={100} delay={3000} />}
-        {/* </Suspense> */}
-      </Suspense>
+      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <Suspense fallback={<div>Suspense Loading...</div>}>
+          <Post
+            // isStale={isStale}
+            postId={queryPostId}
+            // version={deferredVersion}
+          />
+
+          {/* <Suspense fallback={<div>Suspense LoadingSlow...</div>}>
+            {isPending && <div>Transition Loading...</div>}
+            {isShow && <Post postId={100} delay={3000} />}
+          </Suspense> */}
+        </Suspense>
+
+        <Suspense fallback={<div>Suspense Loading...</div>}>
+          <div>
+            <p style={{ color: "red" }}>Check content has been rendered</p>
+            <Post postId={100} key={queryPostId} />
+          </div>
+        </Suspense>
+
+        <button onClick={handleNavigateTo}>Navigate to {postId}</button>
+      </div>
     </div>
   );
 };

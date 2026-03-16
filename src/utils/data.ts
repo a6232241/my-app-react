@@ -7,7 +7,7 @@ export const fetchData = (url: string, version: number = 1, delay = 0) => {
       key,
       fetch(url)
         .then(async (res) => {
-          if (delay) {
+          if (delay !== 0) {
             await new Promise((resolve) => setTimeout(resolve, delay));
           }
           return res;
