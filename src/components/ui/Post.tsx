@@ -1,5 +1,5 @@
 import { use } from "react";
-import { fetchData } from "../utils/data";
+import { fetchData } from "../../utils/data";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface PostData {

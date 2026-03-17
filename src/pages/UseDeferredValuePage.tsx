@@ -1,11 +1,12 @@
 import { useDeferredValue, useState } from "react";
+import { Main } from "../components/layout";
 
 const UseDeferredValuePage = () => {
   const [text, setText] = useState("");
   const deferredText = useDeferredValue(text);
 
   return (
-    <div>
+    <Main>
       <h1>UseDeferredValuePage</h1>
       <input
         type="text"
@@ -14,7 +15,7 @@ const UseDeferredValuePage = () => {
       />
       <p>Text: {text}</p>
       <p>Deferred Text: {deferredText}</p>
-    </div>
+    </Main>
   );
 };
 

@@ -1,11 +1,6 @@
-import {
-  Suspense,
-  useState,
-  useDeferredValue,
-  useTransition,
-} from "react";
-import Post from "../components/Post";
-import Counter from "../components/Counter";
+import { Suspense, useState, useDeferredValue, useTransition } from "react";
+import { Post, Counter } from "../components/ui";
+import { Main } from "../components/layout";
 
 const SuspensePage = () => {
   const [isShow, setIsShow] = useState(false);
@@ -37,7 +32,7 @@ const SuspensePage = () => {
   };
 
   return (
-    <div>
+    <Main>
       <h1>SuspensePage</h1>
       <Counter count={version} setCount={setVersion} title="Version" />
 
@@ -54,11 +49,7 @@ const SuspensePage = () => {
         {/* 行為 2 結果: 觸發 Suspense 的 fallback */}
         <Suspense fallback={<div>Suspense Loading...</div>}>
           {/* 行為 1 結果: 觸發 isStale 改變 Post 的內部 UI */}
-          <Post
-            isStale={isStale}
-            postId={postId}
-            version={deferredVersion}
-          />
+          <Post isStale={isStale} postId={postId} version={deferredVersion} />
         </Suspense>
 
         {/* 實驗組: useTransition + use(promise) */}
@@ -68,7 +59,7 @@ const SuspensePage = () => {
             {isShow ? "Hide slow data" : "Show slow data"}
           </button>
           <Suspense fallback={<div>Suspense LoadingSlow...</div>}>
-            {/* 結果：isPending... 會被顯示 */} 
+            {/* 結果：isPending... 會被顯示 */}
             {isPending && <div>Transition Loading...</div>}
             {isShow && <Post postId={10} />}
           </Suspense>
@@ -81,7 +72,7 @@ const SuspensePage = () => {
           </div>
         </Suspense>
       </div>
-    </div>
+    </Main>
   );
 };
 

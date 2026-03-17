@@ -1,5 +1,5 @@
 import { use } from "react";
-import { TestContext } from "../contexts/Test";
+import { TestContext } from "../../contexts/Test";
 
 function About({ isUseContext }: { isUseContext: boolean }) {
   if (isUseContext) {
