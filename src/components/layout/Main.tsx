@@ -1,12 +1,24 @@
 import { useNavigate } from "react-router-dom";
 
-const Main = ({ children }: { children: React.ReactNode }) => {
+const Main = ({
+  children,
+  contentStyle,
+}: {
+  children: React.ReactNode;
+  contentStyle?: React.CSSProperties;
+}) => {
   const navigation = useNavigate();
 
   return (
-    <main style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-      <button onClick={() => navigation(-1)}>Back</button>
-      <section>{children}</section>
+    <main
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+      }}
+    >
+      <button onClick={() => navigation("/")}>Back Home</button>
+      <section style={contentStyle}>{children}</section>
     </main>
   );
 };
