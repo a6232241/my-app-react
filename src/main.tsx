@@ -7,6 +7,7 @@ import UseDeferredValuePage from "./pages/UseDeferredValuePage.tsx";
 import SuspensePage from "./pages/Suspense.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SuspenseNavigationPage from './pages/SuspenseNavigation.tsx';
+import UseActionStatePage from './pages/UseActionState.tsx';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ createRoot(document.getElementById("root")!).render(
           />
           <Route path="/suspense" element={<SuspensePage />} />
           <Route path="/suspense-navigation" element={<SuspenseNavigationPage />} />
+          <Route path="/use-action-state" element={<UseActionStatePage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
