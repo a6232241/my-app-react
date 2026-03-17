@@ -2,23 +2,21 @@ import {
   Suspense,
   useState,
   useDeferredValue,
-  startTransition,
   useTransition,
 } from "react";
 import Post from "../components/Post";
 import Counter from "../components/Counter";
-import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SuspensePage = () => {
-  const [isShow, setIsShow] = useState(true);
-  const [count, setCount] = useState(0);
-  const deferredVersion = useDeferredValue(count);
+  const [isShow, setIsShow] = useState(false);
+  const [version, setVersion] = useState(0);
+  const deferredVersion = useDeferredValue(version);
 
-  const [searchParams] = useSearchParams();
-  const queryPostId = Number(searchParams.get('id') ?? 1);
+  const [postId, setPostId] = useState(1);
+  const deferredPostId = useDeferredValue(postId);
+  const isStale = deferredPostId !== postId || deferredVersion !== version;
 
-  const [postId, setPostId] = useState(queryPostId);
-  // const deferredPostId = useDeferredValue(postId);
+  const [isPending, startTransition] = useTransition();
 
   // 當 deferredPostId 改變時，觸發 useMemo，並呼叫 promise
   // 1. 因子組件 use(promise) 尚未 resolve，React 中斷當前渲染。
@@ -32,32 +30,16 @@ const SuspensePage = () => {
   //   [deferredPostId],
   // );
 
-  // const isStale = deferredPostId !== postId || deferredVersion !== count;
-
-  // const [isPending, startTransition] = useTransition();
-
   const handleShowSlowData = () => {
     startTransition(() => {
       setIsShow(!isShow);
     });
   };
 
-  const navigate = useNavigate();
-
-  const handleNavigateTo = () => {
-    navigate(`/suspense?id=${postId}`)
-    // startTransition(() => {
-    //   navigate(`/suspense?id=${postId}`)
-    // })
-  }
-
   return (
     <div>
       <h1>SuspensePage</h1>
-      <Counter count={count} setCount={setCount} title="Version" />
-      <button style={{ display: "block" }} onClick={handleShowSlowData}>
-        {isShow ? "Hide slow data" : "Show slow data"}
-      </button>
+      <Counter count={version} setCount={setVersion} title="Version" />
 
       <input
         type="number"
@@ -65,28 +47,39 @@ const SuspensePage = () => {
         onChange={(e) => setPostId(Number(e.target.value))}
       />
 
+      {/* 實驗組: useDeferredValue + use(promise) */}
+      {/* 行為 1：透過 deferredVersion 去觸發 use(promise) */}
+      {/* 行為 2：透過 postId 去觸發 use(promise) */}
       <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        {/* 行為 2 結果: 觸發 Suspense 的 fallback */}
         <Suspense fallback={<div>Suspense Loading...</div>}>
+          {/* 行為 1 結果: 觸發 isStale 改變 Post 的內部 UI */}
           <Post
-            // isStale={isStale}
-            postId={queryPostId}
-            // version={deferredVersion}
+            isStale={isStale}
+            postId={postId}
+            version={deferredVersion}
           />
-
-          {/* <Suspense fallback={<div>Suspense LoadingSlow...</div>}>
-            {isPending && <div>Transition Loading...</div>}
-            {isShow && <Post postId={100} delay={3000} />}
-          </Suspense> */}
         </Suspense>
+
+        {/* 實驗組: useTransition + use(promise) */}
+        {/* 行為：透過 startTransition 去切換 isShow */}
+        <div>
+          <button style={{ display: "block" }} onClick={handleShowSlowData}>
+            {isShow ? "Hide slow data" : "Show slow data"}
+          </button>
+          <Suspense fallback={<div>Suspense LoadingSlow...</div>}>
+            {/* 結果：isPending... 會被顯示 */} 
+            {isPending && <div>Transition Loading...</div>}
+            {isShow && <Post postId={10} />}
+          </Suspense>
+        </div>
 
         <Suspense fallback={<div>Suspense Loading...</div>}>
           <div>
             <p style={{ color: "red" }}>Check content has been rendered</p>
-            <Post postId={100} key={queryPostId} />
+            <Post postId={100} delay={3000} />
           </div>
         </Suspense>
-
-        <button onClick={handleNavigateTo}>Navigate to {postId}</button>
       </div>
     </div>
   );
