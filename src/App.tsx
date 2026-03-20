@@ -11,6 +11,7 @@ function App() {
         <Link to="/use-action-state">UseActionState</Link>
         <Link to="/redux/use-app-selector">UseAppSelector</Link>
         <Link to="/redux/use-app-dispatch">UseAppDispatch</Link>
+        <Link to="/resume/set-interval-listener">SetIntervalListener</Link>
       </nav>
     </TestProvider>
   );

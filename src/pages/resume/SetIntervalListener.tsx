@@ -8,11 +8,9 @@ const useInterval = (callback: () => void, delay: number) => {
   }, [callback]);
 
   useEffect(() => {
-    const tick = () => {
-      savedCallback.current();
-    };
     if (delay !== null) {
-      const id = setInterval(tick, delay);
+      const id = setInterval(() => savedCallback.current(), delay);
+
       return () => clearInterval(id);
     }
   }, [delay]);
