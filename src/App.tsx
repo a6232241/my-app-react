@@ -1,4 +1,3 @@
-import "./App.css";
 import { TestProvider } from "./contexts/Test";
 import { Link } from "react-router-dom";
 
@@ -10,6 +9,8 @@ function App() {
         <Link to="/suspense">Suspense</Link>
         <Link to="/suspense-navigation">SuspenseNavigation</Link>
         <Link to="/use-action-state">UseActionState</Link>
+        <Link to="/redux/use-app-selector">UseAppSelector</Link>
+        <Link to="/redux/use-app-dispatch">UseAppDispatch</Link>
       </nav>
     </TestProvider>
   );
