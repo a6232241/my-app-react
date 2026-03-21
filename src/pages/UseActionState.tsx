@@ -6,14 +6,17 @@ import {
   useState,
 } from "react";
 import { Main } from "../components/layout";
-import { fetchData } from '../utils/data';
+import { fetchData } from "../utils/data";
 
 interface LoginState {
   success: boolean;
   message: string;
 }
 
-const login = async (_previousState: LoginState, formData: FormData): Promise<LoginState> => {
+const login = async (
+  _previousState: LoginState,
+  formData: FormData,
+): Promise<LoginState> => {
   const username = formData.get("username");
   const password = formData.get("password");
 
@@ -26,8 +29,15 @@ const login = async (_previousState: LoginState, formData: FormData): Promise<Lo
   return { success: false, message: "Login failed" };
 };
 
-const updatePost = async (_previousState: number, payload: { postId: number, signal?: AbortSignal }): Promise<number> => {
-  await fetchData(`https://jsonplaceholder.typicode.com/posts/${payload.postId}`, 1, 1000, payload?.signal);
+const updatePost = async (
+  _previousState: number,
+  payload: { postId: number; signal?: AbortSignal },
+): Promise<number> => {
+  await fetchData(
+    { pathname: `/posts/${payload.postId}`, signal: payload?.signal },
+    1,
+    1000,
+  );
   return payload.postId;
 };
 
@@ -68,27 +78,29 @@ const UseActionStatePage = () => {
   //   });
   // };
 
-  const handleUpdateCount = (type: 'ADD' | 'SUB') => {
+  const handleUpdateCount = (type: "ADD" | "SUB") => {
     if (abortRef.current) {
       abortRef.current.abort();
     }
 
     abortRef.current = new AbortController();
 
-    console.log('abortRef.current', abortRef.current);
-
     startTransition(() => {
       if (type === "ADD") {
         setOptimisticPostId((prev) => prev + 1);
-        updatePostAction({postId: postId + 1, signal: abortRef.current?.signal});
+        updatePostAction({
+          postId: postId + 1,
+          signal: abortRef.current?.signal,
+        });
       } else {
         setOptimisticPostId((prev) => prev - 1);
-        updatePostAction({postId: postId - 1, signal: abortRef.current?.signal});
+        updatePostAction({
+          postId: postId - 1,
+          signal: abortRef.current?.signal,
+        });
       }
     });
   };
-
-
 
   return (
     <Main
@@ -105,8 +117,8 @@ const UseActionStatePage = () => {
         <p style={{ opacity: isPendingPost ? 0.5 : 1 }}>
           Post: {optimisticPostId}
         </p>
-        <button onClick={() => handleUpdateCount('ADD')}>+1</button>
-        <button onClick={() => handleUpdateCount('SUB')}>-1</button>
+        <button onClick={() => handleUpdateCount("ADD")}>+1</button>
+        <button onClick={() => handleUpdateCount("SUB")}>-1</button>
       </div>
 
       {/* useActionState 在 form action 使用時，會自動開啟 transition */}

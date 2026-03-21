@@ -30,11 +30,7 @@ const Post = ({ isStale, postId, version, delay = 0 }: PostProps) => {
   // const post = use(postPromise) as PostData | string | null;
   // 方法2. 使用外部快取，由外部快取著 promise 的結果
   const data = use(
-    fetchData(
-      `https://jsonplaceholder.typicode.com/posts/${postId}`,
-      version,
-      delay,
-    ),
+    fetchData({ pathname: `/posts/${postId}` }, version, delay),
   ) as PostData | string | null;
   // 方法3. 使用 Data Fetch 函數庫，例如：TanStack Query、SWR
   // const { data, isLoading, error } = useQuery({

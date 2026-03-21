@@ -1,6 +1,21 @@
-const cache = new Map();
+const cache = new Map<string, Promise<unknown>>();
 
-export const fetchData = (url: string, version: number = 1, delay = 0, signal?: AbortSignal) => {
+const origin = "https://jsonplaceholder.typicode.com";
+
+interface Network {
+  pathname: string;
+  signal?: AbortSignal;
+}
+
+/**
+ * 
+ * @param {Network} network - { pathname: string; signal?: AbortSignal; }
+ * @param {number} [version=1] - cache version
+ * @param {number} [delay=0] - delay time
+ * @returns Promise<unknown>
+ */
+export const fetchData = ({ pathname, signal }: Network, version: number = 1, delay = 0) => {
+  const url = `${origin}${pathname}`;
   const key = `${url}-${version}`;
   if (!cache.has(key)) {
     const promise = delay === 0 ? 
@@ -26,5 +41,5 @@ export const fetchData = (url: string, version: number = 1, delay = 0, signal?: 
 
     cache.set(key, promise);
   }
-  return cache.get(key);
+  return cache.get(key) as Promise<unknown>;
 };
