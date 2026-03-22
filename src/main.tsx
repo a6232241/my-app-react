@@ -13,6 +13,7 @@ import UseActionStatePage from "./pages/UseActionState.tsx";
 import UseAppSelectorPage from "./pages/redux/UseAppSelector.tsx";
 import UseAppDispatchPage from "./pages/redux/UseAppDispatch.tsx";
 import SetIntervalListenerPage from "./pages/resume/SetIntervalListener.tsx";
+import UseEffectEventPage from "./pages/UseEffectEvent.tsx";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ createRoot(document.getElementById("root")!).render(
               path="/resume/set-interval-listener"
               element={<SetIntervalListenerPage />}
             />
+            <Route path="/use-effect-event" element={<UseEffectEventPage />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

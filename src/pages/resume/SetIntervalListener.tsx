@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const useInterval = (callback: () => void, delay: number) => {
   const savedCallback = useRef(callback);
@@ -27,6 +28,10 @@ export default function SetIntervalListenerPage() {
     <div className="App">
       <span>{count}</span>
       <button onClick={() => setCount(count + 1)}>Increase</button>
+
+      <Link to="/use-effect-event">
+        2026/03/22 React 19 官方解法 useEffectEvent
+      </Link>
     </div>
   );
 }
