@@ -11,6 +11,7 @@ function App() {
         <Link to="/suspense-navigation">SuspenseNavigation</Link>
         <Link to="/use-action-state">UseActionState</Link>
         <Link to="/use-effect-event">UseEffectEvent</Link>
+        <Link to="/use-id">UseId</Link>
 
         <h1>Redux & Redux Toolkit</h1>
         <Link to="/redux/use-app-selector">UseAppSelector</Link>
