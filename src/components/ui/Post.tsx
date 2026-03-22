@@ -15,6 +15,7 @@ interface PostProps {
 }
 
 const Post = ({ isStale, postId, version, delay = 0 }: PostProps) => {
+  console.log("Post render", postId);
   // 無限渲染
   // 1. 當呼叫 use 時，如果 promise 處於 pending，React 會中斷渲染
   // 2. promise resolve 後，React 會重新渲染
@@ -54,7 +55,14 @@ const Post = ({ isStale, postId, version, delay = 0 }: PostProps) => {
   }
 
   return (
-    <div style={{ opacity: isStale ? 0.5 : 1 }}>
+    <div
+      style={{
+        opacity: isStale ? 0.5 : 1,
+        transition: isStale
+          ? "opacity 0.2s 0.2s linear"
+          : "opacity 0s 0s linear",
+      }}
+    >
       <p>title: {data.title}</p>
       <p>body: {data.body}</p>
     </div>
