@@ -16,6 +16,7 @@ import SetIntervalListenerPage from "./pages/resume/SetIntervalListener.tsx";
 import UseEffectEventPage from "./pages/UseEffectEvent.tsx";
 import UseIdPage from "./pages/UseId.tsx";
 import UseImperativeHandlePage from './pages/UseImperativeHandle.tsx';
+import UseInsertionEffectPage from './pages/UseInsertionEffect.tsx';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/use-effect-event" element={<UseEffectEventPage />} />
             <Route path="/use-id" element={<UseIdPage />} />
             <Route path="/use-imperative-handle" element={<UseImperativeHandlePage />} />
+            <Route path="/use-insertion-effect" element={<UseInsertionEffectPage />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

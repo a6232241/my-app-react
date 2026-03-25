@@ -13,6 +13,7 @@ function App() {
         <Link to="/use-effect-event">UseEffectEvent</Link>
         <Link to="/use-id">UseId</Link>
         <Link to="/use-imperative-handle">UseImperativeHandle</Link>
+        <Link to="/use-insertion-effect">UseInsertionEffect</Link>
 
         <h1>Redux & Redux Toolkit</h1>
         <Link to="/redux/use-app-selector">UseAppSelector</Link>
