@@ -19,6 +19,7 @@ import UseImperativeHandlePage from './pages/UseImperativeHandle.tsx';
 import UseInsertionEffectPage from './pages/UseInsertionEffect.tsx';
 import UseLayoutEffectPage from "./pages/UseLayoutEffect.tsx";
 import UseOptimisticPage from "./pages/UseOptimistic.tsx";
+import UseSyncExternalStorePage from "./pages/UseSyncExternalStore.tsx";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/use-insertion-effect" element={<UseInsertionEffectPage />} />
             <Route path="/use-layout-effect" element={<UseLayoutEffectPage />} />
             <Route path="/use-optimistic" element={<UseOptimisticPage />} />
+            <Route path="/use-sync-external-store" element={<UseSyncExternalStorePage />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
