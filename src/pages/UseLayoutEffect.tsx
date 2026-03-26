@@ -1,29 +1,39 @@
 import { useLayoutEffect, useState, useRef } from "react";
 import { Main } from "../components/layout";
 
-const Popup = () => {
-  const popupRef = useRef<HTMLDivElement>(null);
+interface PopupProps {
+  y: number;
+}
 
-  const [popupHeight, setPopupHeight] = useState(0);
+const Popup = ({ y }: PopupProps) => {
+  const popupRef = useRef<HTMLDivElement>(null);
+  const [showBelow, setShowBelow] = useState(false);
 
   useLayoutEffect(() => {
-    const { height } = popupRef.current?.getBoundingClientRect() || {
-      height: 0,
-    };
-    setPopupHeight(height);
-  }, []);
+    if (popupRef.current) {
+      const { height } = popupRef.current.getBoundingClientRect();
+
+      setShowBelow(y - height < 0);
+    }
+  }, [y]);
 
   return (
     <div
+      ref={popupRef}
       style={{
         position: "absolute",
-        top: `${popupHeight}px`,
+        left: "0px",
+        top: "0px",
+        transform: showBelow ? "translateY(100%)" : "translateY(-100%)",
         background: "lightyellow",
         border: "1px solid orange",
         padding: "10px",
-        marginTop: "5px",
+        marginTop: showBelow ? "5px" : "-5px",
+        pointerEvents: "none",
+        zIndex: 1000,
+        width: "max-content",
+        color: "black",
       }}
-      ref={popupRef}
     >
       <p>I am a popup positioned correctly before painting!</p>
     </div>
@@ -31,7 +41,6 @@ const Popup = () => {
 };
 
 const UseLayoutEffectPage = () => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const [targetRect, setTargetRect] = useState<{
     left: number;
     top: number;
@@ -44,15 +53,10 @@ const UseLayoutEffectPage = () => {
       <h1>useLayoutEffect</h1>
 
       <button
-        ref={buttonRef}
-        onPointerEnter={() => {
+        style={{ position: "relative" }}
+        onPointerEnter={(e) => {
           const { left, top, right, bottom } =
-            buttonRef.current?.getBoundingClientRect() || {
-              left: 0,
-              top: 0,
-              right: 0,
-              bottom: 0,
-            };
+            e.currentTarget.getBoundingClientRect();
           setTargetRect({ left, top, right, bottom });
         }}
         onPointerLeave={() => {
@@ -60,9 +64,8 @@ const UseLayoutEffectPage = () => {
         }}
       >
         Toggle Popup
+        {targetRect && <Popup y={targetRect.top} />}
       </button>
-
-      {targetRect && <Popup />}
     </Main>
   );
 };

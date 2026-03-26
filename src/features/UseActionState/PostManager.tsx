@@ -14,7 +14,7 @@ const updatePost = async (
       const result = await fetchData({
         pathname: `/posts/${prev.id + 1}`,
         signal: payload?.signal,
-      });
+      }, 1, 1000);
       if (result instanceof Error)
         return {
           ...prev,
