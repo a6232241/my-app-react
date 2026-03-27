@@ -20,6 +20,7 @@ import UseInsertionEffectPage from './pages/UseInsertionEffect.tsx';
 import UseLayoutEffectPage from "./pages/UseLayoutEffect.tsx";
 import UseOptimisticPage from "./pages/UseOptimistic.tsx";
 import UseSyncExternalStorePage from "./pages/UseSyncExternalStore.tsx";
+import ActivityPage from "./pages/Activity.tsx";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/use-layout-effect" element={<UseLayoutEffectPage />} />
             <Route path="/use-optimistic" element={<UseOptimisticPage />} />
             <Route path="/use-sync-external-store" element={<UseSyncExternalStorePage />} />
+            <Route path="/activity/*" element={<ActivityPage />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

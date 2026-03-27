@@ -8,7 +8,6 @@ function App() {
         <h1>React</h1>
         <Link to="/use-deferred-value">UseDeferredValue</Link>
         <Link to="/suspense">Suspense</Link>
-        <Link to="/suspense-navigation">SuspenseNavigation</Link>
         <Link to="/use-action-state">UseActionState</Link>
         <Link to="/use-effect-event">UseEffectEvent</Link>
         <Link to="/use-id">UseId</Link>
@@ -17,6 +16,7 @@ function App() {
         <Link to="/use-layout-effect">UseLayoutEffect</Link>
         <Link to="/use-optimistic">UseOptimistic</Link>
         <Link to="/use-sync-external-store">UseSyncExternalStore</Link>
+        <Link to="/activity">Activity</Link>
 
         <h1>Redux & Redux Toolkit</h1>
         <Link to="/redux/use-app-selector">UseAppSelector</Link>
@@ -24,6 +24,9 @@ function App() {
 
         <h1>Resume</h1>
         <Link to="/resume/set-interval-listener">SetIntervalListener</Link>
+
+        <h1>Demo</h1>
+        <Link to="/suspense-navigation">SuspenseNavigation</Link>
       </nav>
     </TestProvider>
   );

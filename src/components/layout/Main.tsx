@@ -17,7 +17,7 @@ const Main = ({
         gap: "10px",
       }}
     >
-      <button onClick={() => navigation("/")}>Back Home</button>
+      <button onClick={() => navigation("..", { relative: "path" })}>Back Home</button>
       <section style={contentStyle}>{children}</section>
     </main>
   );
