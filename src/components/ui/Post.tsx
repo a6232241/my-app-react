@@ -1,6 +1,5 @@
-import { use } from "react";
+import { Profiler, use, type ProfilerOnRenderCallback } from "react";
 import { fetchData } from "../../utils/data";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface PostData {
   title?: string;
@@ -42,6 +41,10 @@ const Post = ({ isStale, postId, version, delay = 0 }: PostProps) => {
   //     ),
   // });
 
+  const onRender: ProfilerOnRenderCallback = (id, phase, actualDuration, baseDuration, startTime, endTime) => {
+    console.log("Profiler", id, phase, actualDuration, baseDuration, startTime, endTime);
+  }
+
   if (data === null) {
     return <div>Loading...</div>;
   }
@@ -55,17 +58,19 @@ const Post = ({ isStale, postId, version, delay = 0 }: PostProps) => {
   }
 
   return (
-    <div
-      style={{
-        opacity: isStale ? 0.5 : 1,
-        transition: isStale
-          ? "opacity 0.2s 0.2s linear"
-          : "opacity 0s 0s linear",
-      }}
-    >
-      <p>title: {data.title}</p>
-      <p>body: {data.body}</p>
-    </div>
+    <Profiler id="Post" onRender={onRender}>
+      <div
+        style={{
+          opacity: isStale ? 0.5 : 1,
+          transition: isStale
+            ? "opacity 0.2s 0.2s linear"
+            : "opacity 0s 0s linear",
+        }}
+      >
+        <p>title: {data.title}</p>
+        <p>body: {data.body}</p>
+      </div>
+    </Profiler>
   );
 };
 
