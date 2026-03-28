@@ -8,15 +8,15 @@ import SuspensePage from "./pages/Suspense.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import SuspenseNavigationPage from "./pages/SuspenseNavigation.tsx";
+import SuspenseNavigationPage from "./pages/demo/SuspenseNavigation.tsx";
 import UseActionStatePage from "./pages/UseActionState.tsx";
 import UseAppSelectorPage from "./pages/redux/UseAppSelector.tsx";
 import UseAppDispatchPage from "./pages/redux/UseAppDispatch.tsx";
 import SetIntervalListenerPage from "./pages/resume/SetIntervalListener.tsx";
 import UseEffectEventPage from "./pages/UseEffectEvent.tsx";
 import UseIdPage from "./pages/UseId.tsx";
-import UseImperativeHandlePage from './pages/UseImperativeHandle.tsx';
-import UseInsertionEffectPage from './pages/UseInsertionEffect.tsx';
+import UseImperativeHandlePage from "./pages/UseImperativeHandle.tsx";
+import UseInsertionEffectPage from "./pages/UseInsertionEffect.tsx";
 import UseLayoutEffectPage from "./pages/UseLayoutEffect.tsx";
 import UseOptimisticPage from "./pages/UseOptimistic.tsx";
 import UseSyncExternalStorePage from "./pages/UseSyncExternalStore.tsx";
@@ -55,11 +55,23 @@ createRoot(document.getElementById("root")!).render(
             />
             <Route path="/use-effect-event" element={<UseEffectEventPage />} />
             <Route path="/use-id" element={<UseIdPage />} />
-            <Route path="/use-imperative-handle" element={<UseImperativeHandlePage />} />
-            <Route path="/use-insertion-effect" element={<UseInsertionEffectPage />} />
-            <Route path="/use-layout-effect" element={<UseLayoutEffectPage />} />
+            <Route
+              path="/use-imperative-handle"
+              element={<UseImperativeHandlePage />}
+            />
+            <Route
+              path="/use-insertion-effect"
+              element={<UseInsertionEffectPage />}
+            />
+            <Route
+              path="/use-layout-effect"
+              element={<UseLayoutEffectPage />}
+            />
             <Route path="/use-optimistic" element={<UseOptimisticPage />} />
-            <Route path="/use-sync-external-store" element={<UseSyncExternalStorePage />} />
+            <Route
+              path="/use-sync-external-store"
+              element={<UseSyncExternalStorePage />}
+            />
             <Route path="/activity/*" element={<ActivityPage />} />
           </Routes>
         </BrowserRouter>

@@ -1,7 +1,7 @@
 import { Suspense, useTransition } from "react";
-import { Post } from "../components/ui";
+import { Post } from "../../components/ui";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Main } from "../components/layout";
+import { Main } from "../../components/layout";
 
 // 當使用 useTransition 切換 navigation 時，如何保留當前 UI 直到 promise resolve 或 強制重新渲染
 const SuspenseNavigationPage = () => {

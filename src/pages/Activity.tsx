@@ -1,8 +1,8 @@
 import { Route } from "react-router-dom";
 import ActivityRoutes from "../features/Router/ActivityRoutes";
-import DemoPage from "./Activity/Demo";
-import InputPage from "./Activity/Input";
-import HomePage from "./Activity/Home";
+import DemoPage from "./activity/Demo";
+import InputPage from "./activity/Input";
+import HomePage from "./activity/Home";
 
 const ActivityPage = () => {
   return (
