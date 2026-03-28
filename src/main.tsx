@@ -21,6 +21,7 @@ import UseLayoutEffectPage from "./pages/UseLayoutEffect.tsx";
 import UseOptimisticPage from "./pages/UseOptimistic.tsx";
 import UseSyncExternalStorePage from "./pages/UseSyncExternalStore.tsx";
 import ActivityPage from "./pages/Activity.tsx";
+import InfinityLoadingPage from "./pages/demo/InfinityLoading.tsx";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +38,7 @@ createRoot(document.getElementById("root")!).render(
             />
             <Route path="/suspense" element={<SuspensePage />} />
             <Route
-              path="/suspense-navigation"
+              path="/demo/suspense-navigation"
               element={<SuspenseNavigationPage />}
             />
             <Route path="/use-action-state" element={<UseActionStatePage />} />
@@ -73,6 +74,10 @@ createRoot(document.getElementById("root")!).render(
               element={<UseSyncExternalStorePage />}
             />
             <Route path="/activity/*" element={<ActivityPage />} />
+            <Route
+              path="/demo/infinity-loading"
+              element={<InfinityLoadingPage />}
+            />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

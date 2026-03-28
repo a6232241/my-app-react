@@ -26,7 +26,8 @@ function App() {
         <Link to="/resume/set-interval-listener">SetIntervalListener</Link>
 
         <h1>Demo</h1>
-        <Link to="/suspense-navigation">SuspenseNavigation</Link>
+        <Link to="/demo/suspense-navigation">SuspenseNavigation</Link>
+        <Link to="/demo/infinity-loading">InfinityLoading</Link>
       </nav>
     </TestProvider>
   );
