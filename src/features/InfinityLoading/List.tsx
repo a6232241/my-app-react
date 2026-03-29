@@ -19,13 +19,7 @@ const List = () => {
   const loadMore = useCallback(() => {
     const data = {
       id: crypto.randomUUID(),
-      promise: fetchData(
-        { pathname: `/posts/${postId}` },
-        1,
-        1000,
-        false,
-        false,
-      ),
+      promise: fetchData({ pathname: `/posts/${postId}` }, 1, 0, false, false),
     };
     setItems((prev) => [...prev, data]);
     setPostId((prev) => prev + 1);
