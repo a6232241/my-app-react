@@ -1,4 +1,9 @@
-import { Profiler, use, type ProfilerOnRenderCallback } from "react";
+import {
+  captureOwnerStack,
+  Profiler,
+  use,
+  type ProfilerOnRenderCallback,
+} from "react";
 import { fetchData } from "../../utils/data";
 
 interface PostData {
@@ -6,14 +11,18 @@ interface PostData {
   body?: string;
 }
 
-interface PostProps {
+type BaseProps = {
   isStale?: boolean;
-  postId?: number;
   version?: number;
   delay?: number;
   isThrowError?: boolean;
-  postPromise?: Promise<unknown>;
-}
+};
+
+type PostProps = BaseProps &
+  (
+    | { postId: number; postPromise?: never }
+    | { postPromise: Promise<unknown>; postId?: never }
+  );
 
 const Post = ({
   isStale,
@@ -35,20 +44,17 @@ const Post = ({
 
   // 解決方法：
   // 方法1. 透過父層傳遞 promise，由父層快取著 promise 的結果
+  // 方法2. 使用外部快取，由外部快取著 promise 的結果
   const data = postPromise
     ? (use(postPromise) as PostData | string | null)
-    : null;
-
-  // 方法2. 使用外部快取，由外部快取著 promise 的結果
-  // const data = use(
-  //   fetchData(
-  //     { pathname: `/posts/${postId}` },
-  //     version,
-  //     delay,
-  //     isThrowError,
-  //     isCache,
-  //   ),
-  // ) as PostData | string | null;
+    : (use(
+        fetchData(
+          { pathname: `/posts/${postId}` },
+          version,
+          delay,
+          isThrowError,
+        ),
+      ) as PostData | string | null);
   // 方法3. 使用 Data Fetch 函數庫，例如：TanStack Query、SWR
   // const { data, isLoading, error } = useQuery({
   //   queryKey: ["post", postId],
@@ -76,6 +82,9 @@ const Post = ({
       endTime,
     );
   };
+
+  const ownerStack = captureOwnerStack();
+  if (ownerStack) console.log(ownerStack);
 
   if (data === null) {
     return <div>Loading...</div>;
