@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
@@ -22,6 +22,7 @@ import UseOptimisticPage from "./pages/UseOptimistic.tsx";
 import UseSyncExternalStorePage from "./pages/UseSyncExternalStore.tsx";
 import ActivityPage from "./pages/Activity.tsx";
 import InfinityLoadingPage from "./pages/demo/InfinityLoading.tsx";
+const LazyPage = lazy(() => import("./pages/LazyPage.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -77,6 +78,14 @@ createRoot(document.getElementById("root")!).render(
             <Route
               path="/demo/infinity-loading"
               element={<InfinityLoadingPage />}
+            />
+            <Route
+              path="/lazy"
+              element={
+                <Suspense fallback={<div>Loading lazy page...</div>}>
+                  <LazyPage />
+                </Suspense>
+              }
             />
           </Routes>
         </BrowserRouter>

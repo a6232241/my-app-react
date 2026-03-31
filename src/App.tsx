@@ -17,6 +17,7 @@ function App() {
         <Link to="/use-optimistic">UseOptimistic</Link>
         <Link to="/use-sync-external-store">UseSyncExternalStore</Link>
         <Link to="/activity">Activity</Link>
+        <Link to="/lazy">Lazy</Link>
 
         <h1>Redux & Redux Toolkit</h1>
         <Link to="/redux/use-app-selector">UseAppSelector</Link>
