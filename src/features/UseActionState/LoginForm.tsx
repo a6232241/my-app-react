@@ -1,5 +1,6 @@
 import { useActionState, useState } from "react";
 import type { LoginState } from "../../types/models";
+import { useFormStatus } from "react-dom";
 
 const login = async (
   _previousState: LoginState,
@@ -20,6 +21,25 @@ const login = async (
 const initialLoginState: LoginState = {
   success: false,
   message: "",
+};
+
+const Submit = () => {
+  const { pending, data, method } = useFormStatus();
+  const usernameFormData = data?.get("username");
+  const passwordFormData = data?.get("password");
+  const username = typeof usernameFormData === "string" ? usernameFormData : "";
+  const password = typeof passwordFormData === "string" ? passwordFormData : "";
+
+  return (
+    <section>
+      <p>username: {username}</p>
+      <p>password: {password}</p>
+      <p>method: {method}</p>
+      <button type="submit" disabled={pending}>
+        {pending ? "Logging in..." : "Login"}
+      </button>
+    </section>
+  );
 };
 
 const LoginForm = () => {
@@ -61,11 +81,14 @@ const LoginForm = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      {responseData.success && <p>{responseData.message}</p>}
+      {!responseData.success && <p>{responseData.message}</p>}
+
       <button type="submit" disabled={isPending}>
         {isPending ? "Logging in..." : "Login"}
       </button>
-      {responseData.success && <p>{responseData.message}</p>}
-      {!responseData.success && <p>{responseData.message}</p>}
+
+      <Submit />
     </form>
   );
 };
