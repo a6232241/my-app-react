@@ -21,6 +21,7 @@ import UseLayoutEffectPage from "./pages/UseLayoutEffect.tsx";
 import UseOptimisticPage from "./pages/UseOptimistic.tsx";
 import UseSyncExternalStorePage from "./pages/UseSyncExternalStore.tsx";
 import ActivityPage from "./pages/Activity.tsx";
+import CreatePortalPage from "./pages/CreatePortal.tsx";
 import InfinityLoadingPage from "./pages/demo/InfinityLoading.tsx";
 const LazyPage = lazy(() => import("./pages/LazyPage.tsx"));
 
@@ -87,6 +88,7 @@ createRoot(document.getElementById("root")!).render(
                 </Suspense>
               }
             />
+            <Route path="/create-portal" element={<CreatePortalPage />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
