@@ -19,6 +19,7 @@ function App() {
         <Link to="/activity">Activity</Link>
         <Link to="/lazy">Lazy</Link>
         <Link to="/create-portal">CreatePortal</Link>
+        <Link to="/flush-sync">FlushSync</Link>
 
         <h1>Redux & Redux Toolkit</h1>
         <Link to="/redux/use-app-selector">UseAppSelector</Link>

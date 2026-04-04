@@ -22,6 +22,7 @@ import UseOptimisticPage from "./pages/UseOptimistic.tsx";
 import UseSyncExternalStorePage from "./pages/UseSyncExternalStore.tsx";
 import ActivityPage from "./pages/Activity.tsx";
 import CreatePortalPage from "./pages/CreatePortal.tsx";
+import FlushSyncPage from "./pages/FlushSync.tsx";
 import InfinityLoadingPage from "./pages/demo/InfinityLoading.tsx";
 const LazyPage = lazy(() => import("./pages/LazyPage.tsx"));
 
@@ -89,6 +90,7 @@ createRoot(document.getElementById("root")!).render(
               }
             />
             <Route path="/create-portal" element={<CreatePortalPage />} />
+            <Route path="/flush-sync" element={<FlushSyncPage />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
