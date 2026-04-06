@@ -1,11 +1,4 @@
-import {
-  Activity,
-  startTransition,
-  Suspense,
-  useMemo,
-  useState,
-  useTransition,
-} from "react";
+import { Activity, Suspense, useMemo, useState } from "react";
 import { Main } from "../../components/layout";
 import { Post } from "../../components/ui";
 import { fetchData } from "../../utils/data";
@@ -23,9 +16,6 @@ const Counter = () => {
 
 const DemoPage = () => {
   const [tab, setTab] = useState(1);
-  const [show, setShow] = useState(false);
-
-  const [isPending, startTransition] = useTransition();
 
   const onChangeTab = (tab: number) => {
     // startTransition(() => {
